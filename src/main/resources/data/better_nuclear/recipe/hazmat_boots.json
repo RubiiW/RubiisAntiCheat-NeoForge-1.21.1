@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "show_notification": true,
+  "category": "equipment",
+  "pattern": [
+    "R R",
+    "L L"
+  ],
+  "key": {
+    "L": {
+      "tag": "c:plates/lead"
+    },
+    "R": {
+      "tag": "c:ingots/rubber"
+    }
+  },
+  "result": {
+    "id": "better_nuclear:hazmat_boots",
+    "count": 1
+  }
+}
