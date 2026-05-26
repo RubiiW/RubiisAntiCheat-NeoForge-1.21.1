@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "better_nuclear:item/hazmat_hood"
+    "layer0": "boltsngears:item/item_texture_id"
   }
 }
