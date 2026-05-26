@@ -1,6 +1,5 @@
 package net.triblock.bng.item;
 
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -12,7 +11,6 @@ public class ModItems {
 
     public static final DeferredItem<Item> ITEM_VARIABLE_NAME = ITEMS.register("item_id",
             () -> new Item(new Item.Properties()));
-
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);
