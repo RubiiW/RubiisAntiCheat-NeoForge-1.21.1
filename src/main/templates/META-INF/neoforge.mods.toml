@@ -87,31 +87,6 @@ type="required"
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
-
-[[dependencies.${mod_id}]]
-modId="create"
-type="required"
-# This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange="${create_version}"
-ordering="AFTER"
-side="BOTH"
-
-[[dependencies.${mod_id}]]
-modId="tfmg"
-type="required"
-# This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange="${tfmg_version}"
-ordering="AFTER"
-side="BOTH"
-
-[[dependencies.${mod_id}]]
-modId="create_new_age"
-type="required"
-# This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange="${new_age_version}"
-ordering="AFTER"
-side="BOTH"
-
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
 # stop your mod loading on the server for example.
