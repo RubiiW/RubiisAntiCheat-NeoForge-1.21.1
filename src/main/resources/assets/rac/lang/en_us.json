@@ -11,6 +11,7 @@
   "kickReason.missing_mods": "\uE001 \n§4Automatic Detection§r\nMissing required mods: %s. Please add these mods to your game",
   "kickReason.invalid_shader": "\uE001 \n§4Automatic Detection§r\nInvalid shader: %s. Allowed shaders: %s",
   "kickReason.invalid_lighing_multiplier": "\uE001 \n§4Automatic Detection§r\nInvalid cave lighting multiplier value: %s. Maximum allowed is %s",
+  "kickReason.lighting_multiplier_not_supported": "\uE001 \n§4Automatic Detection§r\nCave lighting multiplier is not supported by this shader pack",
   "kickReason.invalid_brightness": "\uE001 \n§4Automatic Detection§r\nInvalid brightness value: %s. Maximum allowed is %s",
 
   "rac.graphics_check_passed": "\uE000 Passed graphics check successfully",

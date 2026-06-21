@@ -5,13 +5,14 @@
   "commands.rac.screenshot_check_other": "\uE000 Récupération d'une capture d'écran de %s",
   "commands.rac.feature_not_enabled": "\uE000 Cette fonctionalité n'est pas activée dans la configuration",
 
-  "kickReason.error_server_side": "\uE001 \n§cErreur Imprévue§r\nErreur côté serveur, merci de contacter l'administration",
-  "kickReason.modified_mod": "\uE000 §cDétection Automatique§r\nMod alteré trouvé: %s. Merci de réinstaller ce mod depuis la source officielle du serveur",
-  "kickReason.forbidden_mods": "\uE000 §cDétection Automatique§r\nMods interdits trouvés: %s. Merci de retirer ces mods de vôtre jeu",
-  "kickReason.missing_mods": "\uE000 §cDétection Automatique§r\nMissing required mods: %s. Merci d'installer ces mods dans vôtre jeu",
-  "kickReason.invalid_shader": "\uE000 §cDétection Automatique§r\nShader invalide: %s. Shaders autorisé: %s",
-  "kickReason.invalid_lighing_multiplier": "\uE000 §cDétection Automatique§r\nValeur de multiplicateur de luminosité des caves invalide: %s. Le maximum autorisé est %s",
-  "kickReason.invalid_brightness": "\uE000 §cDétection Automatique§r\nValeur de luminosité invalide: %s. Le maximum autorisé est %s",
+  "kickReason.error_server_side": "\uE001 \n§4Erreur Imprévue§r\nErreur côté serveur, merci de contacter l'administration",
+  "kickReason.modified_mod": "\uE000 §4Détection Automatique§r\nMod alteré trouvé: %s. Merci de réinstaller ce mod depuis la source officielle du serveur",
+  "kickReason.forbidden_mods": "\uE000 §4Détection Automatique§r\nMods interdits trouvés: %s. Merci de retirer ces mods de vôtre jeu",
+  "kickReason.missing_mods": "\uE000 §4Détection Automatique§r\nMissing required mods: %s. Merci d'installer ces mods dans vôtre jeu",
+  "kickReason.invalid_shader": "\uE000 §4Détection Automatique§r\nShader invalide: %s. Shaders autorisé: %s",
+  "kickReason.invalid_lighing_multiplier": "\uE000 §4Détection Automatique§r\nValeur de multiplicateur de luminosité des caves invalide: %s. Le maximum autorisé est %s",
+  "kickReason.lighting_multiplier_not_supported": "\uE001 \n§4Détection Automatique§r\nLe multiplicateur de luminosité des caves n'est pas supporté par vôtre shader",
+  "kickReason.invalid_brightness": "\uE000 §4Détection Automatique§r\nValeur de luminosité invalide: %s. Le maximum autorisé est %s",
 
   "rac.graphics_check_passed": "\uE000 Vérification des paramètres graphiques passée avec succès",
   "rac.mods_check_passed": "\uE000 Vérification des mods passée avec succès",
@@ -26,5 +27,5 @@
   "features.rac.mod_files_view": "§eMod Files List",
   "features.rac.brightness": "§aBrightness Value",
   "features.rac.cave_light_multiplier": "§aCave Light Multiplier Value",
-  "features.rac.shader_id": "§aCurrent Shader Id",
+  "features.rac.shader_id": "§aCurrent Shader Id"
 }

@@ -133,6 +133,10 @@ public class ClientNetworkHandler {
                     ShaderPackOptions options = Iris.getCurrentPack().get().getShaderPackOptions();
                     if (options.getOptionValues().getStringValue("CAVE_LIGHTING").isPresent()){
                         caveLightingMultiplier = Integer.parseInt(options.getOptionValues().getStringValue("CAVE_LIGHTING").get());
+                    } else if (options.getOptionValues().getStringValue("CAVE_LIGHTING_I").isPresent()){
+                        caveLightingMultiplier = Integer.parseInt(options.getOptionValues().getStringValue("CAVE_LIGHTING_I").get());
+                    } else {
+                        caveLightingMultiplier = -1;
                     }
                 }
             }

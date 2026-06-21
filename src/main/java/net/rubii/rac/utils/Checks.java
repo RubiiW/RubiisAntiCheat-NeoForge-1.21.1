@@ -87,6 +87,8 @@ public class Checks {
     public static CheckResult validCaveLightMultiplier(int caveLightingMultiplier){
         if (!Config.ENABLE_CAVE_LIGHTING_MULTIPLIER.get()) return new CheckResult(true, Component.literal("Disabled"));
 
+        if (caveLightingMultiplier == -1) return new CheckResult(false, Component.literal("kickReason.lighting_multiplier_not_supported"));
+
         int maxMultiplier = Config.CAVE_LIGHTING_MULTIPLIER.get();
 
         return new CheckResult(
