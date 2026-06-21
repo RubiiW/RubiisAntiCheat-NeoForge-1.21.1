@@ -36,27 +36,27 @@ displayName="${mod_name}" #mandatory
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 
 # A file name (in the root of the mod JAR) containing a logo for display
-#logoFile="examplemod.png" #optional
+logoFile= "../../resources/icon.png" #optional
 
 # A text field displayed in the mod UI
-#credits="" #optional
+credits="Made by RubiiW" #optional
 
 # The authors of the mod, displayed in the mod UI (optional)
 authors="RubiiW"
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Better reactor management for Create: New Age & Create: The Factory Must Grow
+Custom Anticheat made by RubiiW for personnal projects
 '''
 
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
-#[[mixins]]
-#config="${mod_id}.mixins.json"
+[[mixins]]
+config="${mod_id}.mixins.json"
 
 # The [[accessTransformers]] block allows you to declare where your AT file is.
 # If this block is omitted, a fallback attempt will be made to load an AT from META-INF/accesstransformer.cfg
-#[[accessTransformers]]
-#file="META-INF/accesstransformer.cfg"
+# [[accessTransformers]]
+# file="META-INF/accesstransformer.cfg"
 
 # The coremods config file path is not configurable and is always loaded from META-INF/coremods.json
 
@@ -85,6 +85,22 @@ modId="minecraft"
 type="required"
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
 versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.${mod_id}]]
+modId="iris"
+type="required"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange="[${iris_version}]"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.${mod_id}]]
+modId="packetfixer"
+type="required"
+# This version range declares a minimum of the current minecraft version up to but not including the next major version
+versionRange="[${packetfixer_version},)"
 ordering="NONE"
 side="BOTH"
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares

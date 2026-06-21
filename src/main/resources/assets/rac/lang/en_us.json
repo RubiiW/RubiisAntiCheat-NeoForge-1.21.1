@@ -1,0 +1,30 @@
+{
+  "commands.rac.full_check_other": "\uE000 Performing full check for %s",
+  "commands.rac.mods_check_other": "\uE000 Performing mods check for %s",
+  "commands.rac.graphics_check_other": "\uE000 Performing graphics check for %s",
+  "commands.rac.screenshot_check_other": "\uE000 Fetching screenshot from %s",
+  "commands.rac.feature_not_enabled": "\uE000 This feature is not enabled in the config",
+
+  "kickReason.error_server_side": "\uE001 \n§4Unexpected Error§r\nServer side error, please contact an admin",
+  "kickReason.modified_mod": "\uE001 \n§4Automatic Detection§r\nModified mod found: %s. Please reinstall this mod from the official server source",
+  "kickReason.forbidden_mods": "\uE001 \n§4Automatic Detection§r\nForbidden mods found: %s. Please remove these mods from your game",
+  "kickReason.missing_mods": "\uE001 \n§4Automatic Detection§r\nMissing required mods: %s. Please add these mods to your game",
+  "kickReason.invalid_shader": "\uE001 \n§4Automatic Detection§r\nInvalid shader: %s. Allowed shaders: %s",
+  "kickReason.invalid_lighing_multiplier": "\uE001 \n§4Automatic Detection§r\nInvalid cave lighting multiplier value: %s. Maximum allowed is %s",
+  "kickReason.invalid_brightness": "\uE001 \n§4Automatic Detection§r\nInvalid brightness value: %s. Maximum allowed is %s",
+
+  "rac.graphics_check_passed": "\uE000 Passed graphics check successfully",
+  "rac.mods_check_passed": "\uE000 Passed mods check successfully",
+  "rac.screenshot_check_passed": "\uE000 Screenshot sent successfully",
+
+  "screen.rac.information.title": "\uE001",
+  "screen.rac.information.subtitle": "This server uses the following features:",
+  "screen.rac.information.continue": "Accept & Continue",
+  "screen.rac.information.cancel": "Deny & Disconnect",
+
+  "features.rac.screenshot": "§cGame Screenshots View",
+  "features.rac.mod_files_view": "§eMod Files List",
+  "features.rac.brightness": "§aBrightness Value",
+  "features.rac.cave_light_multiplier": "§aCave Light Multiplier Value",
+  "features.rac.shader_id": "§aCurrent Shader Id"
+}

@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "net.rubii.rac.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MinecraftServerMixin",
+    "MsgCommandMixin"
+  ],
+  "client": [
+    "ConnectScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
