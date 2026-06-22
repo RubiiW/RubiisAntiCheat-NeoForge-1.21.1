@@ -84,15 +84,17 @@ public class Checks {
         );
     }
 
-    public static CheckResult validCaveLightMultiplier(int caveLightingMultiplier){
+    public static CheckResult validCaveLightMultiplier(float caveLightingMultiplier){
         if (!Config.ENABLE_CAVE_LIGHTING_MULTIPLIER.get()) return new CheckResult(true, Component.literal("Disabled"));
 
-        if (caveLightingMultiplier == -1) return new CheckResult(false, Component.literal("kickReason.lighting_multiplier_not_supported"));
+        if (caveLightingMultiplier == -1) return new CheckResult(true, Component.literal("No Shader Enabled"));
+        if (caveLightingMultiplier == -2) return new CheckResult(false, Component.translatable("kickReason.lighting_multiplier_not_supported")
+                .setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT)));
 
-        int maxMultiplier = Config.CAVE_LIGHTING_MULTIPLIER.get();
+        float maxMultiplier = Config.CAVE_LIGHTING_MULTIPLIER.get().floatValue();
 
         return new CheckResult(
-                caveLightingMultiplier < maxMultiplier,
+                caveLightingMultiplier <= maxMultiplier,
                 Component.translatable("kickReason.invalid_lighing_multiplier", caveLightingMultiplier, maxMultiplier)
                         .setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT))
         );

@@ -9,14 +9,14 @@ import net.rubii.rac.network.ModChannels;
 import net.rubii.rac.network.ServerNetworkHandler;
 import org.jetbrains.annotations.NotNull;
 
-public record SettingsReportPayload(String shaderName, int caveLightingMultiplier, float gamma, boolean silent) implements CustomPacketPayload {
+public record SettingsReportPayload(String shaderName, float caveLightingMultiplier, float gamma, boolean silent) implements CustomPacketPayload {
 
     public static final Type<SettingsReportPayload> TYPE = new Type<>(ModChannels.REPORT_SETTINGS_ID);
 
     public static final StreamCodec<RegistryFriendlyByteBuf, SettingsReportPayload> CODEC =
             StreamCodec.composite(
                     ByteBufCodecs.STRING_UTF8, SettingsReportPayload::shaderName,
-                    ByteBufCodecs.INT, SettingsReportPayload::caveLightingMultiplier,
+                    ByteBufCodecs.FLOAT, SettingsReportPayload::caveLightingMultiplier,
                     ByteBufCodecs.FLOAT, SettingsReportPayload::gamma,
                     ByteBufCodecs.BOOL, SettingsReportPayload::silent,
                     SettingsReportPayload::new

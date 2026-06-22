@@ -56,9 +56,9 @@ public class Config {
             .comment(" The max allowed cave lighting multiplier")
             .define("caveLightMultiplier.enable", true);
 
-    public static final ModConfigSpec.IntValue CAVE_LIGHTING_MULTIPLIER = BUILDER
+    public static final ModConfigSpec.DoubleValue CAVE_LIGHTING_MULTIPLIER = BUILDER
             .comment(" The max allowed cave lighting multiplier")
-            .defineInRange("caveLightMultiplier.max", 0, 0, 1400);
+            .defineInRange("caveLightMultiplier.max", 0.0, 0.0, 1.0);
 
     public static final ModConfigSpec.BooleanValue ENABLE_BRIGHTNESS = BUILDER
             .comment(" The max allowed brightness")
@@ -66,7 +66,7 @@ public class Config {
 
     public static final ModConfigSpec.DoubleValue MAX_BRIGHTNESS = BUILDER
             .comment(" The max allowed brightness")
-            .defineInRange("brightness.max", 0.0f, 0.0, 1.0);
+            .defineInRange("brightness.max", 0.0, 0.0, 1.0);
 
 
 

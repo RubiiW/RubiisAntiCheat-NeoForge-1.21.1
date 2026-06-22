@@ -97,7 +97,7 @@ public class ServerNetworkHandler {
         Component reason = Component.literal("Unknown Error: Ask RubiiW to check ServerNetworkHandler.handleSettingsReport()");
 
         String shaderName = payload.shaderName();
-        int caveLightingMultiplier = payload.caveLightingMultiplier();
+        float caveLightingMultiplier = payload.caveLightingMultiplier();
         float gamma = payload.gamma();
 
         CheckResult validShaderResult = Checks.validShader(shaderName);

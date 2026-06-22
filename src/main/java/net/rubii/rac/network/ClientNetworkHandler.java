@@ -124,7 +124,7 @@ public class ClientNetworkHandler {
         float currentGamma = minecraft.options.gamma().get().floatValue();
 
         String currentShaderName = "";
-        int caveLightingMultiplier = -1;
+        float caveLightingMultiplier = -1;
         if (ModList.get().isLoaded("iris")) {
             IrisApi api = IrisApi.getInstance();
             if (api.isShaderPackInUse()){
@@ -132,11 +132,11 @@ public class ClientNetworkHandler {
                 if (Iris.getCurrentPack().isPresent()){
                     ShaderPackOptions options = Iris.getCurrentPack().get().getShaderPackOptions();
                     if (options.getOptionValues().getStringValue("CAVE_LIGHTING").isPresent()){
-                        caveLightingMultiplier = Integer.parseInt(options.getOptionValues().getStringValue("CAVE_LIGHTING").get());
+                        caveLightingMultiplier = Float.parseFloat(options.getOptionValues().getStringValue("CAVE_LIGHTING").get()) / 1600;
                     } else if (options.getOptionValues().getStringValue("CAVE_LIGHTING_I").isPresent()){
-                        caveLightingMultiplier = Integer.parseInt(options.getOptionValues().getStringValue("CAVE_LIGHTING_I").get());
+                        caveLightingMultiplier = Float.parseFloat(options.getOptionValues().getStringValue("CAVE_LIGHTING_I").get()) / 2;
                     } else {
-                        caveLightingMultiplier = -1;
+                        caveLightingMultiplier = -2;
                     }
                 }
             }
