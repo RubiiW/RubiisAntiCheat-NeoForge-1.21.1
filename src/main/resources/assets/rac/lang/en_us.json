@@ -25,6 +25,7 @@
 
   "features.rac.screenshot": "§cGame Screenshots View",
   "features.rac.mod_files_view": "§eMod Files List",
+  "features.rac.private_chat_permission_override": "§ePrivate Chat Permission Override",
   "features.rac.brightness": "§aBrightness Value",
   "features.rac.cave_light_multiplier": "§aCave Light Multiplier Value",
   "features.rac.shader_id": "§aCurrent Shader Id"

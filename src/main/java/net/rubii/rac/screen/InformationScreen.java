@@ -7,6 +7,7 @@ import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.rubii.rac.RubiisAntiCheat;
+import net.rubii.rac.utils.Utils;
 
 import java.awt.*;
 import java.util.Objects;
@@ -66,14 +67,7 @@ public class InformationScreen extends Screen {
 
         for (String s : data[0].split("§")) {
 
-            Component component = Component.translatable(switch (s){
-                case "a" -> "features.rac.screenshot";
-                case "b" -> "features.rac.mod_files_view";
-                case "c" -> "features.rac.brightness";
-                case "d" -> "features.rac.cave_light_multiplier";
-                case "e" -> "features.rac.shader_id";
-                default -> "";
-            });
+            Component component = Utils.decodeServerData(s);
 
             if (!component.getString().isEmpty()){
                 guiGraphics.drawCenteredString(font, component, centerX, y, 0xFFFFFF);

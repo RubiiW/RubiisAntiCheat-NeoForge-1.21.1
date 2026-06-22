@@ -1,6 +1,7 @@
 package net.rubii.rac.utils;
 
 import com.google.common.collect.Lists;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;
 import net.rubii.rac.Config;
@@ -27,20 +28,31 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class Utils {
-    //private static final String HMAC_ALGORITHM = "HmacSHA256";
-
     public static String encodeServerData(){
         String data = "";
 
         if (Config.ENABLE_SCREENSHOTS.get()) data += "§a";
         if (Config.ENABLE_MOD_ALTERATION_DETECTION.get() || Config.ENABLE_FORBIDDEN_MOD_FILES_LIST.get() || Config.ENABLE_REQUIRED_MOD_FILES_LIST.get()) data += "§b";
-        if (Config.ENABLE_BRIGHTNESS.get()) data += "§c";
-        if (Config.ENABLE_CAVE_LIGHTING_MULTIPLIER.get()) data += "§d";
-        if (Config.ENABLE_SHADER_WHITELIST.get()) data += "§e";
+        if (Config.PRIVATE_CHAT_PERMISSION.get() != 0) data += "§c";
+        if (Config.ENABLE_BRIGHTNESS.get()) data += "§d";
+        if (Config.ENABLE_CAVE_LIGHTING_MULTIPLIER.get()) data += "§e";
+        if (Config.ENABLE_SHADER_WHITELIST.get()) data += "§f";
 
         data += "§r";
 
         return data + "§c[RAC]§r ";
+    }
+
+    public static Component decodeServerData(String identifier){
+        return Component.translatable(switch (identifier){
+            case "a" -> "features.rac.screenshot";
+            case "b" -> "features.rac.mod_files_view";
+            case "c" -> "features.rac.private_chat_permission_override";
+            case "d" -> "features.rac.brightness";
+            case "e" -> "features.rac.cave_light_multiplier";
+            case "f" -> "features.rac.shader_id";
+            default -> "";
+        });
     }
 
     public static GetModsResult getMods(File modsFolder) {
@@ -173,104 +185,4 @@ public class Utils {
 
         return baos.toByteArray();
     }
-
-    /*public static void saveConsent(MinecraftServer server, Player player, boolean accepted) {
-        try {
-            Path dataDir = getOrCreateDataDir(server);
-            Path file = dataDir.resolve(player.getStringUUID() + ".dat");
-
-            byte[] content = new byte[25];
-            int offset = 0;
-
-            long mostSig = player.getUUID().getMostSignificantBits();
-            long leastSig = player.getUUID().getLeastSignificantBits();
-            for (int i = 0; i < 8; i++) content[offset++] = (byte) (mostSig >>> (8 * (7 - i)));
-            for (int i = 0; i < 8; i++) content[offset++] = (byte) (leastSig >>> (8 * (7 - i)));
-
-            content[offset++] = (byte) (accepted ? 1 : 0);
-
-            long timestamp = System.currentTimeMillis();
-            for (int i = 0; i < 8; i++) content[offset++] = (byte) (timestamp >>> (8 * (7 - i)));
-
-            byte[] hmac = calculateHmac(content);
-
-            byte[] fullData = new byte[content.length + hmac.length];
-            System.arraycopy(content, 0, fullData, 0, content.length);
-            System.arraycopy(hmac, 0, fullData, content.length, hmac.length);
-
-            Files.write(file, fullData);
-            RubiisAntiCheat.LOGGER.info("Saved consent of " + player.getName());
-        } catch (IOException | NoSuchAlgorithmException | InvalidKeyException e) {
-            RubiisAntiCheat.LOGGER.error("Failed to save consent data for " + player.getName());
-        }
-    }
-
-    public static boolean getConsent(MinecraftServer server, Player player) {
-        try {
-            Path dataDir = getOrCreateDataDir(server);
-            if (!Files.exists(dataDir)) return false;
-
-            Path file = dataDir.resolve(player.getStringUUID() + ".dat");
-            if (!Files.exists(file)) return false;
-
-            byte[] fullData = Files.readAllBytes(file);
-            if (fullData.length != 57) {
-                RubiisAntiCheat.LOGGER.warn("Invalid consent file size for " + player.getStringUUID() + ". Deleting");
-                Files.delete(file);
-                return false;
-            }
-
-            byte[] content = Arrays.copyOfRange(fullData, 0, 25);
-            byte[] storedHmac = Arrays.copyOfRange(fullData, 25, 57);
-
-            byte[] calculatedHmac = calculateHmac(content);
-            if (!Arrays.equals(storedHmac, calculatedHmac)) {
-                RubiisAntiCheat.LOGGER.warn("Consent file tampered for player " + player.getStringUUID() + "! HMAC mismatch. Resetting consent.");
-                Files.delete(file);
-                return false;
-            }
-
-            return content[16] == 1;
-
-        } catch (IOException | NoSuchAlgorithmException | InvalidKeyException e) {
-            RubiisAntiCheat.LOGGER.error("Error reading consent for " + player.getStringUUID());
-            RubiisAntiCheat.LOGGER.error(e.getMessage());
-            return false;
-        }
-    }
-
-    private static Path getOrCreateDataDir(MinecraftServer server) throws IOException {
-        Path dir = server.getServerDirectory().resolve("rac").resolve("data");
-        if (!Files.exists(dir)) {
-            Files.createDirectories(dir);
-        }
-        return dir;
-    }
-
-    private static byte[] calculateHmac(byte[] data) throws NoSuchAlgorithmException, InvalidKeyException {
-        String key = sha256(RubiisAntiCheat.MOD_PATH.toString());
-
-        Mac mac = Mac.getInstance(HMAC_ALGORITHM);
-        SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), HMAC_ALGORITHM);
-        mac.init(keySpec);
-        return mac.doFinal(data);
-    }
-
-    public static String sha256(String input) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = digest.digest(input.getBytes(StandardCharsets.UTF_8));
-            return bytesToHex(hashBytes);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("SHA-256 algorithm not found " + e);
-        }
-    }
-
-    private static String bytesToHex(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (byte b : bytes) {
-            sb.append(String.format("%02x", b));
-        }
-        return sb.toString();
-    }*/
 }
