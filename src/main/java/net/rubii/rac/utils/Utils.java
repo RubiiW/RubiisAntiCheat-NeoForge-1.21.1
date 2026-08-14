@@ -26,7 +26,7 @@ import java.util.*;
 public class Utils {
 
     public static Path getDataDirectory(MinecraftServer server) {
-        return Config.CUSTOM_DATA_PATH.get().isBlank() ? server.getServerDirectory().resolve("rac") : Path.of(Config.CUSTOM_DATA_PATH.get()).resolve("rac");
+        return Config.CUSTOM_DATA_PATH.get().isBlank() ? server.getServerDirectory().resolve("rac") : Path.of(Config.CUSTOM_DATA_PATH.get());
     }
 
     public static Path getScreenshotDirectory(ServerPlayer player){
