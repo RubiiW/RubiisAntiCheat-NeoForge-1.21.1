@@ -94,7 +94,7 @@ public class Checks {
         float maxBrightness = Config.MAX_BRIGHTNESS.get().floatValue();
 
         return new CheckResult(
-                Math.abs(brightness - maxBrightness) < 0.05f,
+                brightness <= maxBrightness,
                 Component.translatable("kickReason.invalid_brightness", brightness, maxBrightness)
                         .setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT))
         );

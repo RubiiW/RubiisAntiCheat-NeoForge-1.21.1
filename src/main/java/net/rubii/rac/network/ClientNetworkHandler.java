@@ -130,7 +130,7 @@ public class ClientNetworkHandler {
         PacketDistributor.sendToServer(new ModFilesLoggingReportPayload(Utils.encodeList(modFiles), silent));
     }
 
-    public static void sendGraphicsReport(boolean silent) {
+    public static void sendGraphicsReport(String namesList, String valuesList, boolean silent) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null) return;
 
@@ -146,15 +146,21 @@ public class ClientNetworkHandler {
                     ShaderPackOptions options = Iris.getCurrentPack().get().getShaderPackOptions();
 
                     boolean found = false;
-                    List<String> names = Config.CAVE_LIGHT_MULTIPLIER_NAMES.get();
-                    List<Integer> values = Config.CAVE_LIGHT_MULTIPLIER_VALUES.get();
+                    List<String> names = Utils.decodeList(namesList);
+                    List<Integer> values = new java.util.ArrayList<>(List.of());
+
+                    for (String value : Utils.decodeList(valuesList)) {
+                        values.add(Integer.parseInt(value));
+                    }
 
                     for (int i = 0; i < names.size(); i++) {
                         String name = names.get(i);
                         int value = values.get(i);
+                        RubiisAntiCheat.LOGGER.info("Testing shader option " + name + " with max value " + value);
 
                         Optional<String> option = options.getOptionValues().getStringValue(name);
                         if (option.isPresent()) {
+                            RubiisAntiCheat.LOGGER.info("Found shader option " + name + " with max value " + value);
                             caveLightingMultiplier = Float.parseFloat(option.get()) / value;
                             found = true;
                             break;

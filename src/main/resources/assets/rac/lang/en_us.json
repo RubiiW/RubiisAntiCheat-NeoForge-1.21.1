@@ -25,8 +25,8 @@
   "screen.rac.information.cancel": "Deny & Disconnect",
 
   "features.rac.screenshot": "§cTake Game Screenshots",
-  "features.rac.mod_files_view": "§eGet Your Mod Files List",
+  "features.rac.mod_files_view": "§eAccess Your Mod Files List",
   "features.rac.private_chat_permission_override": "§eOverride Private Chat Permission (/msg, /w, etc...)",
-  "features.rac.brightness": "§aGet Your Brightness Value",
-  "features.rac.cave_light_multiplier": "§aGet Your Cave Light Multiplier Value"
+  "features.rac.brightness": "§aAccess Your Brightness Value",
+  "features.rac.cave_light_multiplier": "§aAccess Your Cave Light Multiplier Value"
 }
