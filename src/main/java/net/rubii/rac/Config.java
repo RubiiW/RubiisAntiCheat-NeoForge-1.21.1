@@ -61,13 +61,13 @@ public class Config {
             .comment(" The max allowed cave lighting multiplier (percentage)")
             .defineInRange("caveLightMultiplier.max", 0.0, 0.0, 1.0);
 
-    public static final ModConfigSpec.ConfigValue<List<String>> CAVE_LIGHT_MULTIPLIER_NAMES = BUILDER
+    public static final ModConfigSpec.ConfigValue<ArrayList<String>> CAVE_LIGHT_MULTIPLIER_NAMES = BUILDER
             .comment("The names of the shaders' cave lighting multiplier variables")
-            .define("caveLightMultiplier.names", List.of("CAVE_LIGHTING_I", "CAVE_LIGHTING"));
+            .define("caveLightMultiplier.names", new ArrayList<>(List.of("CAVE_LIGHTING_I", "CAVE_LIGHTING")));
 
-    public static final ModConfigSpec.ConfigValue<List<Integer>> CAVE_LIGHT_MULTIPLIER_VALUES = BUILDER
+    public static final ModConfigSpec.ConfigValue<ArrayList<Integer>> CAVE_LIGHT_MULTIPLIER_VALUES = BUILDER
             .comment("The max values for the corresponding cave lighting variables (must match order of names)")
-            .define("caveLightMultiplier.values", List.of(2, 1600));
+            .define("caveLightMultiplier.values", new ArrayList<>(List.of(2, 1600)));
 
     public static final ModConfigSpec.BooleanValue ENABLE_BRIGHTNESS = BUILDER
             .comment(" The max allowed brightness")
