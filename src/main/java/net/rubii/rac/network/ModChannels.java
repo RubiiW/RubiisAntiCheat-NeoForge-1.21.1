@@ -16,10 +16,16 @@ public class ModChannels {
     public static final ResourceLocation REPORT_MODS_ID =
             ResourceLocation.fromNamespaceAndPath(RubiisAntiCheat.MODID, "report_mods");
 
-    public static final ResourceLocation REQUEST_SETTINGS_ID =
+    public static final ResourceLocation REPORT_MOD_FILES_LOGGING_ID =
+            ResourceLocation.fromNamespaceAndPath(RubiisAntiCheat.MODID, "request_mod_files_logging");
+
+    public static final ResourceLocation REQUEST_MOD_FILES_LOGGING_ID =
+            ResourceLocation.fromNamespaceAndPath(RubiisAntiCheat.MODID, "report_mod_files_logging");
+
+    public static final ResourceLocation REQUEST_LIGHT_SETTINGS_ID =
             ResourceLocation.fromNamespaceAndPath(RubiisAntiCheat.MODID, "request_settings");
 
-    public static final ResourceLocation REPORT_SETTINGS_ID =
+    public static final ResourceLocation REPORT_LIGHT_SETTINGS_ID =
             ResourceLocation.fromNamespaceAndPath(RubiisAntiCheat.MODID, "report_settings");
 
     public static final ResourceLocation REQUEST_SCREENSHOT_ID =

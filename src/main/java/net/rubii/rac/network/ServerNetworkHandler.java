@@ -6,14 +6,12 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.rubii.rac.Config;
 import net.rubii.rac.RubiisAntiCheat;
-import net.rubii.rac.network.payload.ModsReportPayload;
+import net.rubii.rac.network.payload.ModFilesLoggingReportPayload;
+import net.rubii.rac.network.payload.ModsIntegrityReportPayload;
 import net.rubii.rac.network.payload.ScreenshotReportPayload;
-import net.rubii.rac.network.payload.SettingsReportPayload;
+import net.rubii.rac.network.payload.GraphicsSettingsReportPayload;
 import net.rubii.rac.utils.Checks;
 import net.rubii.rac.utils.result.CheckResult;
-import net.rubii.rac.utils.result.ForbiddenModsResult;
-import net.rubii.rac.utils.result.GetModsResult;
-import net.rubii.rac.utils.result.RequiredModsResult;
 import net.rubii.rac.utils.Utils;
 
 import javax.imageio.ImageIO;
@@ -22,12 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.DecimalFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class ServerNetworkHandler {
 
@@ -47,11 +40,10 @@ public class ServerNetworkHandler {
             RubiisAntiCheat.LOGGER.error("Server is null in ServerNetworkHandler.handleScreenshotReport()");
         }
 
-        Path baseDir = server.getServerDirectory().resolve("rac").resolve("screenshots").resolve(sourcePlayer.getStringUUID());
+        Path baseDir = Utils.getScreenshotDirectory(sourcePlayer);
         Files.createDirectories(baseDir);
 
-        String fileName = LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddMMyy-HHmm")) + ".png";
-        Path filePath = baseDir.resolve(fileName);
+        Path filePath = baseDir.resolve(Utils.getTimestampFile(".png"));
 
         if (!ImageIO.write(image, "png", filePath.toFile())) {
             throw new IOException("Failed to write image file to " + filePath);
@@ -60,14 +52,14 @@ public class ServerNetworkHandler {
         if (!payload.silent()) sourcePlayer.sendSystemMessage(Component.translatable("rac.screenshot_check_passed").setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT)));
     }
 
-    public static void handleModsReport(ModsReportPayload payload, ServerPlayer player) throws IOException {
+    public static void handleModsIntegrityReport(ModsIntegrityReportPayload payload, ServerPlayer player) throws IOException {
         boolean isValid = true;
-        Component reason = Component.literal("Unknown Error: Ask RubiiW to check ServerNetworkHandler.handleModsReport()");
+        Component reason = Component.literal("Unknown Error: ServerNetworkHandler.handleModsReport()");
 
-        List<String> modFilesList = Utils.decodeList(payload.modFilesList());
+
         Map<String, Integer> clientHashMap = Utils.decodeHashMap(payload.modHashList());
 
-        CheckResult requiredModsResult = Checks.requiredMods(modFilesList);
+        /*CheckResult requiredModsResult = Checks.requiredMods(modFilesList);
         if (!requiredModsResult.success){
             isValid = false;
             reason = requiredModsResult.reason;
@@ -77,7 +69,7 @@ public class ServerNetworkHandler {
         if (!forbiddenModsResult.success){
             isValid = false;
             reason = forbiddenModsResult.reason;
-        }
+        }*/
 
         CheckResult hashResult = Checks.compareModFilesHash(clientHashMap);
         if (!hashResult.success){
@@ -92,7 +84,15 @@ public class ServerNetworkHandler {
         }
     }
 
-    public static void handleSettingsReport(SettingsReportPayload payload, ServerPlayer player) {
+    public static void handleModFilesLoggingReport(ModFilesLoggingReportPayload payload, ServerPlayer player) throws IOException {
+        Path baseDir = Utils.getModsLoggingDirectory(player);
+        Files.createDirectories(baseDir);
+        Path filePath = baseDir.resolve(Utils.getTimestampFile(".log"));
+
+        Files.write(filePath, Utils.decodeList(payload.modFilesList()));
+    }
+
+    public static void handleGraphicsReport(GraphicsSettingsReportPayload payload, ServerPlayer player) throws IOException {
         boolean isValid = true;
         Component reason = Component.literal("Unknown Error: Ask RubiiW to check ServerNetworkHandler.handleSettingsReport()");
 
@@ -100,11 +100,11 @@ public class ServerNetworkHandler {
         float caveLightingMultiplier = payload.caveLightingMultiplier();
         float gamma = payload.gamma();
 
-        CheckResult validShaderResult = Checks.validShader(shaderName);
-        if (!validShaderResult.success){
-            isValid = false;
-            reason = validShaderResult.reason;
-        }
+        Path baseDir = Utils.getShadersLoggingDirectory(player);
+        Files.createDirectories(baseDir);
+        Path filePath = baseDir.resolve(Utils.getTimestampFile(".log"));
+
+        if (!shaderName.isBlank()) Files.writeString(filePath, shaderName);
 
         CheckResult validCaveLight = Checks.validCaveLightMultiplier(caveLightingMultiplier);
         if (!validCaveLight.success){

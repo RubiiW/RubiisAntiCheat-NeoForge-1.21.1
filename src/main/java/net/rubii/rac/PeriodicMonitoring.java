@@ -1,17 +1,11 @@
 package net.rubii.rac;
 
-import net.irisshaders.iris.Iris;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.fml.ModList;
 import net.rubii.rac.network.ClientNetworkHandler;
-
-import java.text.DecimalFormat;
-import java.time.format.DecimalStyle;
 
 @EventBusSubscriber
 public class PeriodicMonitoring {
@@ -35,6 +29,6 @@ public class PeriodicMonitoring {
         Minecraft instance = Minecraft.getInstance();
         if (instance.player == null) return;
 
-        ClientNetworkHandler.sendSettingsReport(true);
+        ClientNetworkHandler.sendGraphicsReport(true);
     }
 }

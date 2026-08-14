@@ -2,6 +2,7 @@ package net.rubii.rac;
 
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -31,6 +32,7 @@ public class RubiisAntiCheat {
         NeoForge.EVENT_BUS.register(this);
 
         MOD_PATH = modContainer.getModInfo().getOwningFile().getFile().getFilePath();
+
         modContainer.registerConfig(ModConfig.Type.SERVER, Config.SPEC);
 
         modEventBus.addListener(this::addCreative);

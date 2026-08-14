@@ -14,9 +14,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.server.command.EnumArgument;
 import net.rubii.rac.Config;
 import net.rubii.rac.RubiisAntiCheat;
-import net.rubii.rac.network.payload.ModsRequestPayload;
-import net.rubii.rac.network.payload.ScreenshotRequestPayload;
-import net.rubii.rac.network.payload.SettingsRequestPayload;
+import net.rubii.rac.network.payload.*;
 
 import java.util.Collection;
 
@@ -56,23 +54,37 @@ public class RACCommand {
         CheckType type = context.getArgument("type", CheckType.class);
 
         if (type == CheckType.all) {
-            if (Config.ENABLE_REQUIRED_MOD_FILES_LIST.get() || Config.ENABLE_FORBIDDEN_MOD_FILES_LIST.get() || Config.ENABLE_MOD_ALTERATION_DETECTION.get())
-                PacketDistributor.sendToPlayer(player, new ModsRequestPayload(silent));
+            if (/*Config.ENABLE_REQUIRED_MOD_FILES_LIST.get() || Config.ENABLE_FORBIDDEN_MOD_FILES_LIST.get() ||*/ Config.ENABLE_MOD_ALTERATION_DETECTION.get())
+                PacketDistributor.sendToPlayer(player, new ModsIntegrityRequestPayload(silent));
 
-            if (Config.ENABLE_SHADER_WHITELIST.get() || Config.ENABLE_CAVE_LIGHTING_MULTIPLIER.get() || Config.ENABLE_BRIGHTNESS.get())
-                PacketDistributor.sendToPlayer(player, new SettingsRequestPayload(silent));
+            if (Config.ENABLE_CAVE_LIGHTING_MULTIPLIER.get() || Config.ENABLE_BRIGHTNESS.get())
+                PacketDistributor.sendToPlayer(player, new GraphicsSettingsRequestPayload(silent));
 
             if (Config.ENABLE_SCREENSHOTS.get()) PacketDistributor.sendToPlayer(player, new ScreenshotRequestPayload(silent));
+
+            if (Config.ENABLE_LOG_MOD_FILES_LIST.get()) PacketDistributor.sendToPlayer(player, new ModFilesLoggingRequestPayload(silent));
 
             context.getSource().sendSuccess(
                     () -> Component.translatable("commands.rac.full_check_other", player.getName().getString()).setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT)),
                     true
             );
-        } else if (type == CheckType.mods){
-            if (Config.ENABLE_REQUIRED_MOD_FILES_LIST.get() || Config.ENABLE_FORBIDDEN_MOD_FILES_LIST.get() || Config.ENABLE_MOD_ALTERATION_DETECTION.get()){
-                PacketDistributor.sendToPlayer(player, new ModsRequestPayload(silent));
+        } else if (type == CheckType.modsIntegrity){
+            if (/*Config.ENABLE_REQUIRED_MOD_FILES_LIST.get() || Config.ENABLE_FORBIDDEN_MOD_FILES_LIST.get() ||*/ Config.ENABLE_MOD_ALTERATION_DETECTION.get()){
+                PacketDistributor.sendToPlayer(player, new ModsIntegrityRequestPayload(silent));
                 context.getSource().sendSuccess(
-                        () -> Component.translatable("commands.rac.mods_check_other", player.getName().getString()).setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT)),
+                        () -> Component.translatable("commands.rac.mods_integrity_check_other", player.getName().getString()).setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT)),
+                        true
+                );
+            } else {
+                context.getSource().sendFailure(
+                        Component.translatable("commands.rac.feature_not_enabled", player.getName().getString()).setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT))
+                );
+            }
+        } else if (type == CheckType.modsList){
+            if (Config.ENABLE_LOG_MOD_FILES_LIST.get()){
+                PacketDistributor.sendToPlayer(player, new ModFilesLoggingRequestPayload(silent));
+                context.getSource().sendSuccess(
+                        () -> Component.translatable("commands.rac.mod_files_logging_check_other", player.getName().getString()).setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT)),
                         true
                 );
             } else {
@@ -81,8 +93,8 @@ public class RACCommand {
                 );
             }
         } else if (type == CheckType.graphics) {
-            if (Config.ENABLE_SHADER_WHITELIST.get() || Config.ENABLE_CAVE_LIGHTING_MULTIPLIER.get() || Config.ENABLE_BRIGHTNESS.get()){
-                PacketDistributor.sendToPlayer(player, new SettingsRequestPayload(silent));
+            if (Config.ENABLE_CAVE_LIGHTING_MULTIPLIER.get() || Config.ENABLE_BRIGHTNESS.get()){
+                PacketDistributor.sendToPlayer(player, new GraphicsSettingsRequestPayload(silent));
                 context.getSource().sendSuccess(
                         () -> Component.translatable("commands.rac.graphics_check_other", player.getName().getString()).setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT)),
                         true
@@ -108,7 +120,7 @@ public class RACCommand {
     }
 
     private enum CheckType implements StringRepresentable {
-        all, mods, graphics, screenshot;
+        all, modsIntegrity, modsList, graphics, screenshot;
 
         @Override
         public String getSerializedName() {

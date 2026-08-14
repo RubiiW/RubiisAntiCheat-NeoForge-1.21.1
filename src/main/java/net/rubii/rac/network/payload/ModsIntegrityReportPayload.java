@@ -11,16 +11,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-public record ModsReportPayload(String modFilesList, String modHashList, boolean silent) implements CustomPacketPayload {
+public record ModsIntegrityReportPayload(String modFilesList, String modHashList, boolean silent) implements CustomPacketPayload {
 
-    public static final Type<ModsReportPayload> TYPE = new Type<>(ModChannels.REPORT_MODS_ID);
+    public static final Type<ModsIntegrityReportPayload> TYPE = new Type<>(ModChannels.REPORT_MODS_ID);
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, ModsReportPayload> CODEC =
+    public static final StreamCodec<RegistryFriendlyByteBuf, ModsIntegrityReportPayload> CODEC =
             StreamCodec.composite(
-                    ByteBufCodecs.STRING_UTF8, ModsReportPayload::modFilesList,
-                    ByteBufCodecs.STRING_UTF8, ModsReportPayload::modHashList,
-                    ByteBufCodecs.BOOL, ModsReportPayload::silent,
-                    ModsReportPayload::new
+                    ByteBufCodecs.STRING_UTF8, ModsIntegrityReportPayload::modFilesList,
+                    ByteBufCodecs.STRING_UTF8, ModsIntegrityReportPayload::modHashList,
+                    ByteBufCodecs.BOOL, ModsIntegrityReportPayload::silent,
+                    ModsIntegrityReportPayload::new
             );
 
     @Override
@@ -29,11 +29,11 @@ public record ModsReportPayload(String modFilesList, String modHashList, boolean
         return TYPE;
     }
 
-    public static void handle(ModsReportPayload payload, net.neoforged.neoforge.network.handling.IPayloadContext context) {
+    public static void handle(ModsIntegrityReportPayload payload, net.neoforged.neoforge.network.handling.IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer player){
                 try {
-                    ServerNetworkHandler.handleModsReport(payload, player);
+                    ServerNetworkHandler.handleModsIntegrityReport(payload, player);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

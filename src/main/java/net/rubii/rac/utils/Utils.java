@@ -3,15 +3,12 @@ package net.rubii.rac.utils;
 import com.google.common.collect.Lists;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.rubii.rac.Config;
-import net.rubii.rac.RubiisAntiCheat;
 import net.rubii.rac.utils.result.ForbiddenModsResult;
 import net.rubii.rac.utils.result.GetModsResult;
 import net.rubii.rac.utils.result.RequiredModsResult;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
@@ -19,24 +16,43 @@ import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.InvalidKeyException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Utils {
+
+    public static Path getDataDirectory(MinecraftServer server) {
+        return Config.CUSTOM_DATA_PATH.get().isBlank() ? server.getServerDirectory().resolve("rac") : Path.of(Config.CUSTOM_DATA_PATH.get()).resolve("rac");
+    }
+
+    public static Path getScreenshotDirectory(ServerPlayer player){
+        return getDataDirectory(player.getServer()).resolve(player.getStringUUID()).resolve("screenshots");
+    }
+
+    public static Path getModsLoggingDirectory(ServerPlayer player){
+        return getDataDirectory(player.getServer()).resolve(player.getStringUUID()).resolve("mods");
+    }
+
+    public static Path getShadersLoggingDirectory(ServerPlayer player){
+        return getDataDirectory(player.getServer()).resolve(player.getStringUUID()).resolve("shaders");
+    }
+
+    public static String getTimestampFile(String extension){
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddMMyy-HHmm")) + extension;
+    }
+
     public static String encodeServerData(){
         String data = "";
 
         if (Config.ENABLE_SCREENSHOTS.get()) data += "§a";
-        if (Config.ENABLE_MOD_ALTERATION_DETECTION.get() || Config.ENABLE_FORBIDDEN_MOD_FILES_LIST.get() || Config.ENABLE_REQUIRED_MOD_FILES_LIST.get()) data += "§b";
+        if (Config.ENABLE_MOD_ALTERATION_DETECTION.get() || Config.ENABLE_LOG_MOD_FILES_LIST.get() /*|| Config.ENABLE_FORBIDDEN_MOD_FILES_LIST.get() || Config.ENABLE_REQUIRED_MOD_FILES_LIST.get()*/) data += "§b";
         if (Config.PRIVATE_CHAT_PERMISSION.get() != 0) data += "§c";
         if (Config.ENABLE_BRIGHTNESS.get()) data += "§d";
         if (Config.ENABLE_CAVE_LIGHTING_MULTIPLIER.get()) data += "§e";
-        if (Config.ENABLE_SHADER_WHITELIST.get()) data += "§f";
 
         data += "§r";
 
@@ -50,7 +66,6 @@ public class Utils {
             case "c" -> "features.rac.private_chat_permission_override";
             case "d" -> "features.rac.brightness";
             case "e" -> "features.rac.cave_light_multiplier";
-            case "f" -> "features.rac.shader_id";
             default -> "";
         });
     }
@@ -100,7 +115,7 @@ public class Utils {
         return hashList;
     }
 
-    public static RequiredModsResult hasRequiredModFiles(List<String> modIds) {
+    /*public static RequiredModsResult hasRequiredModFiles(List<String> modIds) {
         List<String> requiredMods = Config.REQUIRED_MOD_FILES_LIST.get();
         List<String> missingMods = Lists.newArrayList();
         boolean success = true;
@@ -128,7 +143,7 @@ public class Utils {
         }
 
         return new ForbiddenModsResult(success, additionalMods);
-    }
+    }*/
 
     public static String encodeList(List<String> strings) {
         String result = "";
@@ -165,24 +180,24 @@ public class Utils {
     }
 
     public static byte[] compress(BufferedImage image, float quality) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
 
-        if (!writers.hasNext()) throw new IllegalStateException("No JPG Writer found");
+        if (!writers.hasNext()) throw new IllegalStateException("No JPG writer found");
 
         ImageWriter writer = writers.next();
-        ImageOutputStream ios = ImageIO.createImageOutputStream(baos);
-        writer.setOutput(ios);
+        ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(outputStream);
+        writer.setOutput(imageOutputStream);
 
-        ImageWriteParam param = writer.getDefaultWriteParam();
-        param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-        param.setCompressionQuality(quality);
+        ImageWriteParam parameters = writer.getDefaultWriteParam();
+        parameters.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+        parameters.setCompressionQuality(quality);
 
-        writer.write(null, new IIOImage(image, null, null), param);
+        writer.write(null, new IIOImage(image, null, null), parameters);
 
-        ios.close();
+        imageOutputStream.close();
         writer.dispose();
 
-        return baos.toByteArray();
+        return outputStream.toByteArray();
     }
 }

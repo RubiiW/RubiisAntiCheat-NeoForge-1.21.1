@@ -7,10 +7,12 @@ import net.irisshaders.iris.shaderpack.option.ShaderPackOptions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.rubii.rac.Config;
 import net.rubii.rac.RubiisAntiCheat;
-import net.rubii.rac.network.payload.ModsReportPayload;
+import net.rubii.rac.network.payload.ModFilesLoggingReportPayload;
+import net.rubii.rac.network.payload.ModsIntegrityReportPayload;
 import net.rubii.rac.network.payload.ScreenshotReportPayload;
-import net.rubii.rac.network.payload.SettingsReportPayload;
+import net.rubii.rac.network.payload.GraphicsSettingsReportPayload;
 import net.neoforged.fml.ModList;
 import net.rubii.rac.utils.Utils;
 import net.rubii.rac.utils.result.GetModsResult;
@@ -19,20 +21,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ClientNetworkHandler {
-
-    /*public static void openConsentScreen() {
-        Minecraft minecraft = Minecraft.getInstance();
-        Player player  = minecraft.player;
-        if (player == null) return;
-
-        ConsentScreen screen = new ConsentScreen((accepted) -> {
-            PacketDistributor.sendToServer(new ConsentReportPayload(accepted));
-        });
-
-        minecraft.setScreen(screen);
-    }*/
 
     public static void sendScreenshotReport(boolean silent) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -40,10 +31,10 @@ public class ClientNetworkHandler {
 
         NativeImage image = Screenshot.takeScreenshot(minecraft.getMainRenderTarget());
 
-        trySend(image, silent);
+        trySendImage(image, silent);
     }
 
-    public static void trySend(NativeImage image, boolean silent) {
+    public static void trySendImage(NativeImage image, boolean silent) {
         try {
             BufferedImage bufferedImage = new BufferedImage(
                     image.getWidth(),
@@ -82,7 +73,7 @@ public class ClientNetworkHandler {
         }
     }
 
-    public static void sendModsReport(boolean silent) {
+    public static void sendModsIntegrityReport(boolean silent) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null) return;
 
@@ -101,7 +92,7 @@ public class ClientNetworkHandler {
             return;
         }
 
-        Map<String, Integer> hashMap = Map.of();
+        Map<String, Integer> hashMap;
         try {
             GetModsResult result = Utils.getMods(modsFolder);
             if (!result.success) {
@@ -114,10 +105,32 @@ public class ClientNetworkHandler {
             return;
         }
 
-        PacketDistributor.sendToServer(new ModsReportPayload(Utils.encodeList(modIds), Utils.encodeHashMap(hashMap), silent));
+        PacketDistributor.sendToServer(new ModsIntegrityReportPayload(Utils.encodeList(modIds), Utils.encodeHashMap(hashMap), silent));
     }
 
-    public static void sendSettingsReport(boolean silent) {
+    public static void sendModFilesLoggingReport(boolean silent) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.player == null) return;
+
+        File modsFolder = RubiisAntiCheat.MOD_PATH.toFile().getParentFile();
+        List<String> modFiles;
+
+        try {
+            modFiles = Utils.getModList(modsFolder);
+        } catch (Exception e) {
+            RubiisAntiCheat.LOGGER.error(e.getMessage());
+            return;
+        }
+
+        if (modFiles == null || modFiles.isEmpty()){
+            RubiisAntiCheat.LOGGER.error("Failed to get mods ids in ClientNetworkHandler.sendModFilesLoggingReport()");
+            return;
+        }
+
+        PacketDistributor.sendToServer(new ModFilesLoggingReportPayload(Utils.encodeList(modFiles), silent));
+    }
+
+    public static void sendGraphicsReport(boolean silent) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player == null) return;
 
@@ -131,17 +144,28 @@ public class ClientNetworkHandler {
                 currentShaderName = Iris.getCurrentPackName();
                 if (Iris.getCurrentPack().isPresent()){
                     ShaderPackOptions options = Iris.getCurrentPack().get().getShaderPackOptions();
-                    if (options.getOptionValues().getStringValue("CAVE_LIGHTING").isPresent()){
-                        caveLightingMultiplier = Float.parseFloat(options.getOptionValues().getStringValue("CAVE_LIGHTING").get()) / 1600;
-                    } else if (options.getOptionValues().getStringValue("CAVE_LIGHTING_I").isPresent()){
-                        caveLightingMultiplier = Float.parseFloat(options.getOptionValues().getStringValue("CAVE_LIGHTING_I").get()) / 2;
-                    } else {
-                        caveLightingMultiplier = -2;
+
+                    boolean found = false;
+                    List<String> names = Config.CAVE_LIGHT_MULTIPLIER_NAMES.get();
+                    List<Integer> values = Config.CAVE_LIGHT_MULTIPLIER_VALUES.get();
+
+                    for (int i = 0; i < names.size(); i++) {
+                        String name = names.get(i);
+                        int value = values.get(i);
+
+                        Optional<String> option = options.getOptionValues().getStringValue(name);
+                        if (option.isPresent()) {
+                            caveLightingMultiplier = Float.parseFloat(option.get()) / value;
+                            found = true;
+                            break;
+                        }
                     }
+
+                    if (!found) caveLightingMultiplier = -2;
                 }
             }
         }
 
-        PacketDistributor.sendToServer(new SettingsReportPayload(currentShaderName, caveLightingMultiplier, currentGamma, silent));
+        PacketDistributor.sendToServer(new GraphicsSettingsReportPayload(currentShaderName, caveLightingMultiplier, currentGamma, silent));
     }
 }

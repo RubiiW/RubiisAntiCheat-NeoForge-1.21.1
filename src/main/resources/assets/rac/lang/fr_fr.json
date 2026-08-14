@@ -1,8 +1,9 @@
 {
   "commands.rac.full_check_other": "\uE000 Vérification complète de %s",
-  "commands.rac.mods_check_other": "\uE000 Vérification des mods de %s",
+  "commands.rac.mods_integrity_check_other": "\uE000 Vérification des mods de %s",
   "commands.rac.graphics_check_other": "\uE000 Vérification des paramètres graphiques de %s",
   "commands.rac.screenshot_check_other": "\uE000 Récupération d'une capture d'écran de %s",
+  "commands.rac.mod_files_logging_check_other": "\uE000 Récupération des mods de %s",
   "commands.rac.feature_not_enabled": "\uE000 Cette fonctionalité n'est pas activée dans la configuration",
 
   "kickReason.error_server_side": "\uE001 \n§4Erreur Imprévue§r\nErreur côté serveur, merci de contacter l'administration",
@@ -15,18 +16,17 @@
   "kickReason.invalid_brightness": "\uE000 §4Détection Automatique§r\nValeur de luminosité invalide: %s. Le maximum autorisé est %s",
 
   "rac.graphics_check_passed": "\uE000 Vérification des paramètres graphiques passée avec succès",
-  "rac.mods_check_passed": "\uE000 Vérification des mods passée avec succès",
+  "rac.mods_check_passed": "\uE000 Vérification des mods passée avec succès, liste des mods envoyée avec succès",
   "rac.screenshot_check_passed": "\uE000 Capture du jeu envoyée avec succès",
 
   "screen.rac.information.title": "\uE001",
-  "screen.rac.information.subtitle": "Ce serveur utilise les fonctions suivantes:",
+  "screen.rac.information.subtitle": "Ce serveur pourrat faire les choses suivantes suivantes:",
   "screen.rac.information.continue": "Accepter & Continuer",
   "screen.rac.information.cancel": "Refuser & Se Deconnecter",
 
   "features.rac.screenshot": "§cVoir les Captures d'Écran du Jeu",
-  "features.rac.mod_files_view": "§eListe des Fichiers",
-  "features.rac.private_chat_permission_override": "§eRemplacement des Permission de Chat Privé",
-  "features.rac.brightness": "§aValeur de la Luminosité",
-  "features.rac.cave_light_multiplier": "§aValeur du Multiplicateur de Luminosité des Caves",
-  "features.rac.shader_id": "§aIdentifient du Shader Actif"
+  "features.rac.mod_files_view": "§eVoir la Liste des Fichiers",
+  "features.rac.private_chat_permission_override": "§eRemplacemer des Permission de Chat Privé",
+  "features.rac.brightness": "§aVoir la Valeur de la Luminosité",
+  "features.rac.cave_light_multiplier": "§aVoir la Valeur du Multiplicateur de Luminosité des Caves"
 }

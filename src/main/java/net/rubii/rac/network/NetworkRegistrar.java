@@ -14,22 +14,23 @@ public class NetworkRegistrar {
         PayloadRegistrar registrar = event.registrar("1.0").optional();
 
         //SERVER TO CLIENT
-        /*registrar.playToClient(
-                ConsentRequestPayload.TYPE,
-                ConsentRequestPayload.CODEC,
-                ConsentRequestPayload::handle
-        );*/
 
         registrar.playToClient(
-                SettingsRequestPayload.TYPE,
-                SettingsRequestPayload.CODEC,
-                SettingsRequestPayload::handle
+                GraphicsSettingsRequestPayload.TYPE,
+                GraphicsSettingsRequestPayload.CODEC,
+                GraphicsSettingsRequestPayload::handle
         );
 
         registrar.playToClient(
-                ModsRequestPayload.TYPE,
-                ModsRequestPayload.CODEC,
-                ModsRequestPayload::handle
+                ModsIntegrityRequestPayload.TYPE,
+                ModsIntegrityRequestPayload.CODEC,
+                ModsIntegrityRequestPayload::handle
+        );
+
+        registrar.playToClient(
+                ModFilesLoggingRequestPayload.TYPE,
+                ModFilesLoggingRequestPayload.CODEC,
+                ModFilesLoggingRequestPayload::handle
         );
 
         registrar.playToClient(
@@ -39,22 +40,23 @@ public class NetworkRegistrar {
         );
 
         //CLIENT TO SERVER
-        /*registrar.playToServer(
-                ConsentReportPayload.TYPE,
-                ConsentReportPayload.CODEC,
-                ConsentReportPayload::handle
-        );*/
 
         registrar.playToServer(
-                SettingsReportPayload.TYPE,
-                SettingsReportPayload.CODEC,
-                SettingsReportPayload::handle
+                GraphicsSettingsReportPayload.TYPE,
+                GraphicsSettingsReportPayload.CODEC,
+                GraphicsSettingsReportPayload::handle
         );
 
         registrar.playToServer(
-                ModsReportPayload.TYPE,
-                ModsReportPayload.CODEC,
-                ModsReportPayload::handle
+                ModsIntegrityReportPayload.TYPE,
+                ModsIntegrityReportPayload.CODEC,
+                ModsIntegrityReportPayload::handle
+        );
+
+        registrar.playToServer(
+                ModFilesLoggingReportPayload.TYPE,
+                ModFilesLoggingReportPayload.CODEC,
+                ModFilesLoggingReportPayload::handle
         );
 
         registrar.playToServer(

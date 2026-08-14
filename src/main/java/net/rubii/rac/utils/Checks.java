@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Checks {
-    public static CheckResult requiredMods(List<String> modFilesList) {
+    /*public static CheckResult requiredMods(List<String> modFilesList) {
         if (!Config.ENABLE_REQUIRED_MOD_FILES_LIST.get()) return new CheckResult(true, Component.literal("Disabled"));
 
         RequiredModsResult requiredResult = Utils.hasRequiredModFiles(modFilesList);
@@ -34,7 +34,7 @@ public class Checks {
                 Component.translatable("kickReason.forbidden_mods", forbiddenResult.forbiddenMods.toString())
                         .setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT))
         );
-    }
+    }*/
 
     public static CheckResult compareModFilesHash(Map<String, Integer> clientHashMap){
         if (!Config.ENABLE_MOD_ALTERATION_DETECTION.get()) return new CheckResult(true, Component.literal("Disabled"));
@@ -70,18 +70,6 @@ public class Checks {
                 return error;
             }
         }
-    }
-
-    public static CheckResult validShader(String shaderName){
-        if (!Config.ENABLE_SHADER_WHITELIST.get()) return new CheckResult(true, Component.literal("Disabled"));
-
-        List<String> allowedShaders = Config.SHADER_WHITELIST.get();
-
-        return new CheckResult(
-                allowedShaders.contains(shaderName) || Objects.equals(shaderName, ""),
-                Component.translatable("kickReason.invalid_shader", shaderName, allowedShaders.toString())
-                        .setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT))
-        );
     }
 
     public static CheckResult validCaveLightMultiplier(float caveLightingMultiplier){

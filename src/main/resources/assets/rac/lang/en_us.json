@@ -1,8 +1,9 @@
 {
   "commands.rac.full_check_other": "\uE000 Performing full check for %s",
-  "commands.rac.mods_check_other": "\uE000 Performing mods check for %s",
+  "commands.rac.mods_integrity_check_other": "\uE000 Performing mods check for %s",
   "commands.rac.graphics_check_other": "\uE000 Performing graphics check for %s",
   "commands.rac.screenshot_check_other": "\uE000 Fetching screenshot from %s",
+  "commands.rac.mod_files_logging_check_other": "\uE000 Fetching mod files from %s",
   "commands.rac.feature_not_enabled": "\uE000 This feature is not enabled in the config",
 
   "kickReason.error_server_side": "\uE001 \n§4Unexpected Error§r\nServer side error, please contact an admin",
@@ -15,18 +16,17 @@
   "kickReason.invalid_brightness": "\uE001 \n§4Automatic Detection§r\nInvalid brightness value: %s. Maximum allowed is %s",
 
   "rac.graphics_check_passed": "\uE000 Passed graphics check successfully",
-  "rac.mods_check_passed": "\uE000 Passed mods check successfully",
+  "rac.mods_check_passed": "\uE000 Passed mods check successfully, mod list sent successfully",
   "rac.screenshot_check_passed": "\uE000 Screenshot sent successfully",
 
   "screen.rac.information.title": "\uE001",
-  "screen.rac.information.subtitle": "This server uses the following features:",
+  "screen.rac.information.subtitle": "This server will be able to do the following:",
   "screen.rac.information.continue": "Accept & Continue",
   "screen.rac.information.cancel": "Deny & Disconnect",
 
-  "features.rac.screenshot": "§cGame Screenshots View",
-  "features.rac.mod_files_view": "§eMod Files List",
-  "features.rac.private_chat_permission_override": "§ePrivate Chat Permission Override",
-  "features.rac.brightness": "§aBrightness Value",
-  "features.rac.cave_light_multiplier": "§aCave Light Multiplier Value",
-  "features.rac.shader_id": "§aCurrent Shader Id"
+  "features.rac.screenshot": "§cTake Game Screenshots",
+  "features.rac.mod_files_view": "§eGet Your Mod Files List",
+  "features.rac.private_chat_permission_override": "§eOverride Private Chat Permission (/msg, /w, etc...)",
+  "features.rac.brightness": "§aGet Your Brightness Value",
+  "features.rac.cave_light_multiplier": "§aGet Your Cave Light Multiplier Value"
 }

@@ -8,24 +8,21 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.rubii.rac.RubiisAntiCheat;
 import net.rubii.rac.utils.Utils;
-
-import java.awt.*;
-import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 public class InformationScreen extends Screen {
     private final Runnable onContinue;
     private final Runnable onCancel;
 
-    private Component subtitle;
-    private String rawData;
+    private final Component subtitle;
+    private final String rawData;
 
     public InformationScreen(Runnable onContinue, Runnable onCancel, ServerData serverData) {
         super(Component.translatable("screen.rac.information.title").setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT)));
         this.onContinue = onContinue;
         this.onCancel = onCancel;
         this.subtitle = Component.translatable("screen.rac.information.subtitle");
-        this.rawData = serverData.motd.getString();
-        RubiisAntiCheat.LOGGER.error(rawData);
+        this.rawData = serverData.motd == null ? "" : serverData.motd.getString();
     }
 
     @Override
@@ -49,7 +46,7 @@ public class InformationScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         renderBackground(guiGraphics, mouseX, mouseY, partialTick);
 
         guiGraphics.fill(0, 0, width, height, 0xFF201010);
@@ -79,7 +76,7 @@ public class InformationScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void renderBackground(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         if (this.minecraft.level == null) {
             this.renderPanorama(guiGraphics, partialTick);
         }
