@@ -15,8 +15,11 @@ import net.neoforged.neoforge.server.command.EnumArgument;
 import net.rubii.rac.Config;
 import net.rubii.rac.RubiisAntiCheat;
 import net.rubii.rac.network.payload.*;
+import net.rubii.rac.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class RACCommand {
     public static void register(CommandDispatcher<net.minecraft.commands.CommandSourceStack> dispatcher) {
@@ -57,8 +60,19 @@ public class RACCommand {
             if (/*Config.ENABLE_REQUIRED_MOD_FILES_LIST.get() || Config.ENABLE_FORBIDDEN_MOD_FILES_LIST.get() ||*/ Config.ENABLE_MOD_ALTERATION_DETECTION.get())
                 PacketDistributor.sendToPlayer(player, new ModsIntegrityRequestPayload(silent));
 
-            if (Config.ENABLE_CAVE_LIGHTING_MULTIPLIER.get() || Config.ENABLE_BRIGHTNESS.get())
-                PacketDistributor.sendToPlayer(player, new GraphicsSettingsRequestPayload(silent));
+            if (Config.ENABLE_CAVE_LIGHTING_MULTIPLIER.get() || Config.ENABLE_BRIGHTNESS.get()){
+                List<String> values = new ArrayList<>();
+
+                for (Integer value : Config.CAVE_LIGHT_MULTIPLIER_VALUES.get()){
+                    values.add(value.toString());
+                }
+
+                PacketDistributor.sendToPlayer(player, new GraphicsSettingsRequestPayload(
+                        Utils.encodeList(Config.CAVE_LIGHT_MULTIPLIER_NAMES.get()),
+                        Utils.encodeList(values),
+                        true
+                ));
+            }
 
             if (Config.ENABLE_SCREENSHOTS.get()) PacketDistributor.sendToPlayer(player, new ScreenshotRequestPayload(silent));
 
@@ -94,7 +108,19 @@ public class RACCommand {
             }
         } else if (type == CheckType.graphics) {
             if (Config.ENABLE_CAVE_LIGHTING_MULTIPLIER.get() || Config.ENABLE_BRIGHTNESS.get()){
-                PacketDistributor.sendToPlayer(player, new GraphicsSettingsRequestPayload(silent));
+
+                List<String> values = new ArrayList<>();
+
+                for (Integer value : Config.CAVE_LIGHT_MULTIPLIER_VALUES.get()){
+                    values.add(value.toString());
+                }
+
+                PacketDistributor.sendToPlayer(player, new GraphicsSettingsRequestPayload(
+                        Utils.encodeList(Config.CAVE_LIGHT_MULTIPLIER_NAMES.get()),
+                        Utils.encodeList(values),
+                        true
+                ));
+
                 context.getSource().sendSuccess(
                         () -> Component.translatable("commands.rac.graphics_check_other", player.getName().getString()).setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT)),
                         true
