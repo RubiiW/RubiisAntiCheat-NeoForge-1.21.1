@@ -11,7 +11,7 @@ public class NetworkRegistrar {
 
     @SubscribeEvent
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar("1.0").optional();
+        PayloadRegistrar registrar = event.registrar("1.0");
 
         //SERVER TO CLIENT
 

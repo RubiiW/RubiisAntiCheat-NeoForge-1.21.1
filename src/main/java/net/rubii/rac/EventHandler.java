@@ -1,5 +1,6 @@
 package net.rubii.rac;
 
+import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -21,6 +22,8 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity().getServer() instanceof IntegratedServer) return;
+
         if (event.getEntity() instanceof ServerPlayer player) {
             List<String> values = new ArrayList<>();
 
@@ -41,18 +44,19 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onServerTick(ServerTickEvent.Post event) {
-        for (ServerPlayer player : event.getServer().getPlayerList().getPlayers()) {
-            if (!Config.ENABLE_PERIODIC_MONITORING.get()) return;
+        if (event.getServer() instanceof IntegratedServer) return;
+        if (!Config.ENABLE_PERIODIC_MONITORING.get()) return;
 
-            ticks++;
+        ticks++;
 
-            if (ticks % Config.PERIODIC_MONITORING_INTERVAL.get() == 0) {
-                List<String> values = new ArrayList<>();
+        if (ticks % Config.PERIODIC_MONITORING_INTERVAL.get() == 0) {
+            List<String> values = new ArrayList<>();
 
-                for (Integer value : Config.CAVE_LIGHT_MULTIPLIER_VALUES.get()){
-                    values.add(value.toString());
-                }
+            for (Integer value : Config.CAVE_LIGHT_MULTIPLIER_VALUES.get()){
+                values.add(value.toString());
+            }
 
+            for (ServerPlayer player : event.getServer().getPlayerList().getPlayers()) {
                 PacketDistributor.sendToPlayer(player, new GraphicsSettingsRequestPayload(
                         Utils.encodeList(Config.CAVE_LIGHT_MULTIPLIER_NAMES.get()),
                         Utils.encodeList(values),
