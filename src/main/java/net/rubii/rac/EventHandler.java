@@ -1,6 +1,5 @@
 package net.rubii.rac;
 
-import net.minecraft.client.server.IntegratedServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -22,7 +21,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getEntity().getServer() instanceof IntegratedServer) return;
+        if (event.getEntity().getServer().isSingleplayer()) return;
 
         if (event.getEntity() instanceof ServerPlayer player) {
             List<String> values = new ArrayList<>();
@@ -44,7 +43,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onServerTick(ServerTickEvent.Post event) {
-        if (event.getServer() instanceof IntegratedServer) return;
+        if (event.getServer().isSingleplayer()) return;
         if (!Config.ENABLE_PERIODIC_MONITORING.get()) return;
 
         ticks++;
