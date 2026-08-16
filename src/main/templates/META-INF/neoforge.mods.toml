@@ -39,7 +39,7 @@ displayName="${mod_name}" #mandatory
 logoFile= "../../resources/icon.png" #optional
 
 # A text field displayed in the mod UI
-credits="Made by RubiiW" #optional
+credits="Made by RubiiW, Portuguese translation by Mcnet2004" #optional
 
 # The authors of the mod, displayed in the mod UI (optional)
 authors="RubiiW"

@@ -16,7 +16,8 @@
   "kickReason.invalid_brightness": "\uE001 \n§4Automatic Detection§r\nInvalid brightness value: %s. Maximum allowed is %s",
 
   "rac.graphics_check_passed": "\uE000 Passed graphics check successfully",
-  "rac.mods_check_passed": "\uE000 Passed mods check successfully, mod list sent successfully",
+  "rac.mods_integrity_check_passed": "\uE000 Passed mods check successfully",
+  "rac.mod_list_passed": "\uE000 Mod list sent successfully",
   "rac.screenshot_check_passed": "\uE000 Screenshot sent successfully",
 
   "screen.rac.information.title": "\uE001",

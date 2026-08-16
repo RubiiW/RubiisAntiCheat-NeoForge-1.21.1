@@ -1,0 +1,33 @@
+{
+  "commands.rac.full_check_other": "\uE000 Executando verificação completa para %s",
+  "commands.rac.mods_integrity_check_other": "\uE000 Executando verificação de mods para %s",
+  "commands.rac.graphics_check_other": "\uE000 Executando verificação gráfica para %s",
+  "commands.rac.screenshot_check_other": "\uE000 Buscando screenshot de %s",
+  "commands.rac.mod_files_logging_check_other": "\uE000 Buscando ficheiro de mods de %s",
+  "commands.rac.feature_not_enabled": "\uE000 Este recurso não esta ativo nas configurações",
+
+  "kickReason.error_server_side": "\uE001 \n§4Erro Inesperado§r\nErro do lado do servidor, por favor contactar um administrador",
+  "kickReason.modified_mod": "\uE001 \n§4Deteção Automática§r\nMod : %s. Por favor reinstalar este mod pela fonte oficial do servidor",
+  "kickReason.forbidden_mods": "\uE001 \n§4Deteção Automática§r\nMods proibidos encontrados: %s. Por favor remover estes mods do jogo",
+  "kickReason.missing_mods": "\uE001 \n§4Deteção Automática§r\nFalhando mods necessarios: %s. Por favor adicione estes mods no jogo",
+  "kickReason.invalid_shader": "\uE001 \n§4Deteção Automática§r\nShader inválido: %s. Shaders permitidos: %s",
+  "kickReason.invalid_lighing_multiplier": "\uE001 \n§4Deteção Automática§r\nMultiplicador de luz da caverna invalido: %s. Máximo autorizado é %s",
+  "kickReason.lighting_multiplier_not_supported": "\uE001 \n§4Deteção Automática§r\nMultiplicador de luz da caverna não é suportado por este shader pack",
+  "kickReason.invalid_brightness": "\uE001 \n§4Deteção Automática§r\nNível de luminusidade inválido: %s. Máximo autorizado é %s",
+
+  "rac.graphics_check_passed": "\uE000 Passou verificação gráfica com sucesso",
+  "rac.mods_integrity_check_passed": "\uE000 Passou verificação de mods com sucesso",
+  "rac.mod_list_passed": "\uE000 Lista de mods enviado com sucesso",
+  "rac.screenshot_check_passed": "\uE000 Screenshot enviada com sucesso",
+
+  "screen.rac.information.title": "\uE001",
+  "screen.rac.information.subtitle": "Este servidor poderá fazer o seguinte:",
+  "screen.rac.information.continue": "Aceitar & Continuar",
+  "screen.rac.information.cancel": "Rejeitar & Desconectar",
+
+  "features.rac.screenshot": "§cTire screenshot do jogo",
+  "features.rac.mod_files_view": "§eAceda a lista de ficheiros dos mods",
+  "features.rac.private_chat_permission_override": "§eSobreescrita das permições de chat prtivado (/msg, /w, etc...)",
+  "features.rac.brightness": "§aAceda ao seu valor de brilho",
+  "features.rac.cave_light_multiplier": "§aAceda ao valor de multiplicador de luz das cavernas"
+}

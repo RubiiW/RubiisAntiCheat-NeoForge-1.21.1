@@ -80,7 +80,7 @@ public class ServerNetworkHandler {
         if (!isValid) {
             player.connection.disconnect(reason);
         } else {
-            if (!payload.silent()) player.sendSystemMessage(Component.translatable("rac.mods_check_passed").setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT)));
+            if (!payload.silent()) player.sendSystemMessage(Component.translatable("rac.mods_integrity_check_passed").setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT)));
         }
     }
 
@@ -90,6 +90,8 @@ public class ServerNetworkHandler {
         Path filePath = baseDir.resolve(Utils.getTimestampFile(".log"));
 
         Files.write(filePath, Utils.decodeList(payload.modFilesList()));
+
+        if (!payload.silent()) player.sendSystemMessage(Component.translatable("rac.mod_list_passed").setStyle(Style.EMPTY.withFont(RubiisAntiCheat.ICON_FONT)));
     }
 
     public static void handleGraphicsReport(GraphicsSettingsReportPayload payload, ServerPlayer player) throws IOException {

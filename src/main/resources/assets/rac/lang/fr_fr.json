@@ -16,7 +16,8 @@
   "kickReason.invalid_brightness": "\uE000 §4Détection Automatique§r\nValeur de luminosité invalide: %s. Le maximum autorisé est %s",
 
   "rac.graphics_check_passed": "\uE000 Vérification des paramètres graphiques passée avec succès",
-  "rac.mods_check_passed": "\uE000 Vérification des mods passée avec succès, liste des mods envoyée avec succès",
+  "rac.mods_integrity_check_passed": "\uE000 Vérification des mods passée avec succès",
+  "rac.mod_list_passed": "\uE000 Liste des mods envoyée avec succès",
   "rac.screenshot_check_passed": "\uE000 Capture du jeu envoyée avec succès",
 
   "screen.rac.information.title": "\uE001",
